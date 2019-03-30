@@ -21,11 +21,20 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lQC-S4-ek0">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cell Size: 10P, Change it by swipe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rw9-VQ-AQ1">
+                                <rect key="frame" x="20" y="437.5" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="lQC-S4-ek0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="6Zw-39-nmc"/>
+                            <constraint firstItem="Rw9-VQ-AQ1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GOt-tO-cz5"/>
                             <constraint firstAttribute="bottom" secondItem="lQC-S4-ek0" secondAttribute="bottom" id="HFx-BQ-uNr"/>
+                            <constraint firstItem="Rw9-VQ-AQ1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="IPA-VN-0v7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Rw9-VQ-AQ1" secondAttribute="trailing" constant="20" id="P7j-Yw-7rk"/>
                             <constraint firstItem="lQC-S4-ek0" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gk4-AC-wB0"/>
                             <constraint firstItem="lQC-S4-ek0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zfS-cE-kxA"/>
                         </constraints>
@@ -33,6 +42,7 @@
                     </view>
                     <connections>
                         <outlet property="imgBK" destination="lQC-S4-ek0" id="dwe-po-epq"/>
+                        <outlet property="lblCellUnit" destination="Rw9-VQ-AQ1" id="552-uO-reZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

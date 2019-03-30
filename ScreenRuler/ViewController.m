@@ -8,20 +8,53 @@
 
 #import "ViewController.h"
 
+#define DYNAMIC_LINE_FLAG_X 10009
+#define DYNAMIC_LINE_FLAG_Y 10010
+
 @interface ViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imgBK;
-
+@property (weak, nonatomic) IBOutlet UILabel *lblCellUnit;
 @end
 
-@implementation ViewController
+@implementation ViewController {
+@private int _currentCellSize;
+}
 
 - (void)viewDidLoad {
+    self->_currentCellSize = 10;
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self drawLines];
+    
+    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(increaseCellUnit:)];
+    swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.view addGestureRecognizer:swipeUp];
+    
+    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(reduceCellUnit:)];
+    swipeDown.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.view addGestureRecognizer:swipeDown];
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:tap];
+}
+
+-(void)increaseCellUnit:(UISwipeGestureRecognizer *)recognizer {
+    _currentCellSize = _currentCellSize + 1;
+    
+    [self clearLines];
+    [self drawLines];
+    _lblCellUnit.text = [NSString stringWithFormat:@"Cell Size: %dP, Change it by swipe", self->_currentCellSize];
+}
+
+-(void)reduceCellUnit:(UISwipeGestureRecognizer *)recognizer {
+    if(_currentCellSize - 1 <= 0) return;
+    
+    _currentCellSize = _currentCellSize - 1;
+    [self clearLines];
+    [self drawLines];
+    _lblCellUnit.text = [NSString stringWithFormat:@"Cell Size: %dP, Change it by swipe", self->_currentCellSize];
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer {
@@ -32,18 +65,29 @@
     int screenHeight = [UIScreen mainScreen].bounds.size.height;
     int screenWidth = [UIScreen mainScreen].bounds.size.width;
     for(int x=0; x < screenWidth; x++) {
-        if(x % 10 == 0) {
+        if(x % _currentCellSize == 0) {
             UIView* line = [[UIView alloc] initWithFrame:CGRectMake(x, 0, 1, screenHeight)];
             line.backgroundColor = [UIColor blueColor];
+            line.tag = DYNAMIC_LINE_FLAG_X;
             [self.view addSubview:line];
         }
     }
     for(int y=0; y < screenHeight; y++) {
-        if(y % 10 == 0) {
+        if(y % _currentCellSize == 0) {
             UIView* line = [[UIView alloc] initWithFrame:CGRectMake(0, y, screenWidth, 1)];
             line.backgroundColor = [UIColor redColor];
+            line.tag = DYNAMIC_LINE_FLAG_Y;
             [self.view addSubview:line];
         }
+    }
+    
+    [self.view bringSubviewToFront: _lblCellUnit];
+}
+
+-(void)clearLines {
+    for (UIView* view in self.view.subviews) {
+        if(view.tag == DYNAMIC_LINE_FLAG_X || view.tag == DYNAMIC_LINE_FLAG_Y)
+            [view removeFromSuperview];
     }
 }
 
